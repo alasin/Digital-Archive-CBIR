@@ -1,0 +1,21 @@
+html
+  head
+    meta(charset='UTF-8')
+    title
+      | Digital Archive Server
+    script(type='text/javascript', src='javascripts/script.js')
+    script(src='javascripts/jquery-2.1.0.min.js')
+    
+       
+    form(method='post', action='/upload', enctype='multipart/form-data')
+      h6 Add image:
+      input(type='file', name='image')
+      br
+      textarea#tag1(name = 'tag1', cols='8', rows='1')
+      textarea#tag2(name = 'tag2', cols='8', rows='1')
+      textarea#tag3(name = 'tag3', cols='8', rows='1')
+      textarea#tag4(name = 'tag4', cols='8', rows='1')
+      br
+      input#uploadbutton(type='submit', value='Upload and Add Tags')
+      
+    

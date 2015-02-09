@@ -1,0 +1,44 @@
+html
+  head
+    meta(charset='UTF-8')
+    title
+      | Digital Archive
+    script(type='text/javascript', src='javascripts/script.js')
+    script(src='javascripts/jquery-2.1.0.min.js')
+    
+       
+  body
+    h6 Search by tags:
+    forms
+      textarea#searchBox(name='searchBox', cols='10', rows='1')
+      br
+      button#searchButton(type='submit', style="height: 20px; width: 80px", onclick='initAll()') Search
+      
+    
+    a#link1.links(href='', style='padding:10px 10px 10px 10px;')
+      img(id='image1' src='', alt='')
+    a#link2.links(href='', style='padding:10px 10px 10px 10px;')
+      img(id='image2' src='',alt='')
+    a#link3.links(href='', style='padding:10px 10px 10px 10px;')
+      img(id='image3' src='',alt='')
+    a#link4.links(href='', style='padding:10px 10px 10px 10px;') 
+      img(id='image4' src='',alt='')
+    a#link5.links(href='', style='padding:10px 10px 10px 10px;')
+      img(id='image5' src='',alt='')
+    a#link6.links(href='', style='padding:10px 10px 10px 10px;')
+      img(id='image6' src='',alt='')
+    a#link7.links(href='', style='padding:10px 10px 10px 10px;')
+      img(id='image7' src='',alt='')
+    a#link8.links(href='', style='padding:10px 10px 10px 10px;')
+      img(id='image8' src='',alt='')
+    a#link9.links(href='', style='padding:10px 10px 10px 10px;')
+      img(id='image9' src='',alt='')
+    a#link10.links(href='', style='padding:10px 10px 10px 10px;')
+      img(id='image10' src='',alt='')
+    a#link11.links(href='', style='padding:10px 10px 10px 10px;')
+      img(id='image11' src='',alt='')
+          
+    form(enctype='multipart/form-data')
+      h6 Search by Image:
+      input#imageFilename(type='file', name='image')
+      input#uploadbutton2(type='submit', onClick='imageSearch', value='Search')  
