@@ -1,1 +1,1 @@
-# Digital-Archive-CBIR-
+# Digital-Archive-CBIR
