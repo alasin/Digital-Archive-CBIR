@@ -1,23 +1,60 @@
-/*var pythonshell = require('python-shell');
+var fs = require('fs');
+var pythonshell = require('python-shell');
 
-var options = {
-  mode: 'text',
-  pythonPath: '/usr/bin/python',
-  pythonOptions: ['-u'],
-  scriptPath: '/home/kamikaze',
-  args: ['/home/kamikaze/Development/uploads', '/home/kamikaze/dummy/index.txt']
-};
+
 
 
 exports.searchImage = function(req, res)
 {
-  pythonshell.run('search.py', options, function (err, results) {
-  if (err) throw err;
-  // results is an array consisting of messages collected during execution 
-  console.log('results: %j', results);
-});
-  
-}*/
+  //console.log(req.files.image.path)
+  fs.readFile(req.files.image.path, function (err, data) 
+  {
+
+		var imageName = req.files.image.name
+		//console.log(imageName)
+		/// If there's an error
+		if(!imageName){
+
+			console.log("There was an error")
+			res.redirect("/");
+			res.end();
+
+		} 
+		
+		else
+		{
+
+		  var newPath = "temp/" + imageName;
+		  var tempPath = "/home/kamikaze/Digital_Archive/Client/" + newPath 
+		  fs.writeFile(newPath, data, function (err) 
+		  
+		  {
+		    //console.log("Temp File created");
+		    if(err)
+		      throw err;
+		    	  				
+		  });
+		  
+		  /*var options = 
+		  {
+		    mode: 'text',
+		    scriptPath: '/home/kamikaze/Digital_Archive',
+		    args: ['/home/kamikaze/Digital_Archive/Database/fullsize', '/home/kamikaze/Digital_Archive/Database/color.xml', tempPath]
+		  }
+		
+		  pythonshell.run('search.py', options, function(err, results) 
+		  {
+		    if (err) throw err;
+		    console.log('results: %j', results);
+		  });*/
+		
+		
+		}
+		
+		
+  });
+    
+}
 
 exports.index = function(req, res){
   res.render('index');

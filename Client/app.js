@@ -25,7 +25,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.get('/', routes.index);
 app.post('/search', routes.search);
-//app.post('/searchImage', routes.searchImage);
+app.post('/searchImage', routes.searchImage);
 
 var xmlDoc, dummy, elem;
 
