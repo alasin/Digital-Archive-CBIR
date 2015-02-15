@@ -26,7 +26,9 @@ ap.add_argument("-i", "--index", required = True,
 	help = "Path to where the computed index will be stored")
 args = vars(ap.parse_args())
  
-index = {}  
+big_index = []
+index = {}
+#small_index = []
 
 desc = RGBHistogram([8, 8, 8])
 
@@ -35,14 +37,16 @@ f = open(args["index"], "w")
 
 for imagePath in glob.glob(args["dataset"] + "/*.jpg"):
 	k = imagePath[imagePath.rfind("/") + 1:]
-
 	image = cv2.imread(imagePath)
 	features = desc.describe(image)
+	big_index.append({'image':[k, features.tolist()]})
 	index[k] = features.tolist()
+	#big_index.append(index)
 	#print type(index[k])
 		
 #print type(index)
-xml = dicttoxml.dicttoxml(index)
+#xml = dicttoxml.dicttoxml(big_index, custom_root='images')
+xml = dicttoxml.dicttoxml(index, attr_type=False)
 f.write(xml)
 f.close()	
 

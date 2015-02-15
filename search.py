@@ -1,6 +1,7 @@
 import numpy as np
 import argparse
 import cPickle
+import xmltodict
 import cv2
 
 class RGBHistogram:
@@ -64,11 +65,21 @@ print "query: %s" % (args["query"])
 # describe the query
 desc = RGBHistogram([8, 8, 8])
 queryFeatures = desc.describe(queryImage)
-print queryFeatures
+#print queryFeatures
 
 # load the index
-index = cPickle.loads(open(args["index"]).read())
-searcher = Searcher(index)
+#index = cPickle.loads(open(args["index"]).read())
+index = dict(xmltodict.parse(open(args["index"]).read()))
+new_index = dict(index.values()[0])
+print new_index.keys()
+#print new_index["mandawa052.jpg"].keys()
+
+for i in new_index.keys():
+  new_index[i] = new_index[i]["item"]
+  new_index[i] = map(float, new_index[i])
+   
+#print new_index["mandawa052.jpg"] 
+searcher = Searcher(new_index)
 results = searcher.search(queryFeatures)
 
 # loop over the top ten results

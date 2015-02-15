@@ -42,10 +42,10 @@ exports.search = function(req, res){
 	basex.debug_mode = false;
 	// create query instance
 	
-	var inputquery = 'declare variable $stringList as xs:string external;' + 'for $node in doc("/home/kamikaze/Development/Database/tags.xml")/images/image where $node/tag=tokenize($stringList, " ") return $node/source/text()';
-	
+	var inputquery = 'declare variable $stringList as xs:string external;' + 'for $node in doc("/home/kamikaze/Digital_Archive/Database/tags.xml")/images/image where $node/tag=tokenize($stringList, " ") return $node/source/text()';
+	var secondquery = 'for $img in (for $node in doc("/home/kamikaze/Digital_Archive/Database/colornew.xml")/images/item return $node)/image/item[type="str"] return ($img/image/item/text())';
 	//var inputquery = 'declare variable $stringList as xs:string external;' + ' return element { $stringList }';
-	var query = session.query(inputquery);
+	var query = session.query(secondquery);
 	query.bind("stringList", string);
 
 	//var result = query.results(log.print);
