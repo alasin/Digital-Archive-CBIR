@@ -40,7 +40,18 @@ function imageSearch() {
 	
 	  .done(function(data) {
 	    
-	    console.log("Done");
+	    console.log(data);
+	    for(var i=0; i<data.length;i++)
+	    {
+	      //console.log("Image " + (i+1) + " Location: localhost:8080/uploads/" + data.result[i] + '\n');
+	      var dummyId = "image" + (i+1)*100;
+	      var dummyLinkId = "link" + (i+1)*100;
+	      console.log(dummyId);
+	      console.log(dummyLinkId);
+	      console.log(data[i]);
+	      document.getElementById(dummyId).src= "http://localhost:8080/uploads/thumbs/" + data[i];
+	      document.getElementById(dummyLinkId).href= "http://localhost:8080/uploads/" + data[i];
+	    }
 	    
 	  });
 }

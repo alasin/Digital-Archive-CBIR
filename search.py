@@ -3,6 +3,7 @@ import argparse
 import cPickle
 import xmltodict
 import cv2
+import sys
 
 class RGBHistogram:
 	def __init__(self, bins):
@@ -44,23 +45,23 @@ class Searcher:
 	      
 	      
 
-ap = argparse.ArgumentParser()
+#ap = argparse.ArgumentParser()
 
-ap.add_argument("-d", "--dataset", required = True,
-	help = "Path to the directory that contains the images we just indexed")
+#ap.add_argument("-d", "--dataset", required = True,
+#	help = "Path to the directory that contains the images we just indexed")
 
-ap.add_argument("-i", "--index", required = True,
-	help = "Path to where we stored our index")
+#ap.add_argument("-i", "--index", required = True,
+#	help = "Path to where we stored our index")
 
-ap.add_argument("-q", "--query", required = True,
-	help = "Path to query image")
+#ap.add_argument("-q", "--query", required = True,
+#	help = "Path to query image")
 
-args = vars(ap.parse_args())
+#args = vars(ap.parse_args())
 
 # load the query image and show it
-queryImage = cv2.imread(args["query"])
-cv2.imshow("Query", queryImage)
-print "query: %s" % (args["query"])
+queryImage = cv2.imread(sys.argv[3])
+#cv2.imshow("Query", queryImage)
+#print "query: %s" % (sys.argv[3])
 
 # describe the query
 desc = RGBHistogram([8, 8, 8])
@@ -69,9 +70,9 @@ queryFeatures = desc.describe(queryImage)
 
 # load the index
 #index = cPickle.loads(open(args["index"]).read())
-index = dict(xmltodict.parse(open(args["index"]).read()))
+index = dict(xmltodict.parse(open(sys.argv[2]).read()))
 new_index = dict(index.values()[0])
-print new_index.keys()
+#print new_index.keys()
 #print new_index["mandawa052.jpg"].keys()
 
 for i in new_index.keys():
@@ -86,7 +87,11 @@ results = searcher.search(queryFeatures)
 for j in xrange(0, 10):
 	
 	(score, imageName) = results[j]
-	path = args["dataset"] + "/%s" % (imageName)
-	result = cv2.imread(path)
-	print "\t%d. %s : %.3f" % (j + 1, path, score)
+	path1 = sys.argv[1] + "/fullsize/%s" % (imageName)
+	path2 = sys.argv[1] + "/thumbs/%s" % (imageName)
+	#result = cv2.imread(path)
+	#print "\t%d. %s : %.3f" % (j + 1, path, score)
+	#print "%s" % (path1)
+	#print "%s" % (path2)
+	print imageName
 	

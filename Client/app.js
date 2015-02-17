@@ -104,6 +104,7 @@ var xmlDoc, dummy, elem;
 
 /// Show files
 app.get('/uploads/:file', function (req, res){
+	//console.log("Inside fullsize");
 	file = req.params.file;
 	var img = fs.readFileSync("../Database/fullsize/" + file);
 	res.writeHead(200, {'Content-Type': 'image/jpg' });
@@ -112,6 +113,7 @@ app.get('/uploads/:file', function (req, res){
 });
 
 app.get('/uploads/thumbs/:file', function (req, res){
+	//console.log("Inside thumbs");
 	file = req.params.file;
 	var img = fs.readFileSync("../Database/thumbs/" + file);
 	res.writeHead(200, {'Content-Type': 'image/jpg' });

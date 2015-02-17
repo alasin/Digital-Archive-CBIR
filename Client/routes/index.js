@@ -10,6 +10,7 @@ exports.searchImage = function(req, res)
   fs.readFile(req.files.image.path, function (err, data) 
   {
 
+		var response;
 		var imageName = req.files.image.name
 		//console.log(imageName)
 		/// If there's an error
@@ -35,23 +36,24 @@ exports.searchImage = function(req, res)
 		    	  				
 		  });
 		  
-		  /*var options = 
+		  var options = 
 		  {
 		    mode: 'text',
 		    scriptPath: '/home/kamikaze/Digital_Archive',
-		    args: ['/home/kamikaze/Digital_Archive/Database/fullsize', '/home/kamikaze/Digital_Archive/Database/color.xml', tempPath]
+		    args: ['/home/kamikaze/Digital_Archive/Database', '/home/kamikaze/Digital_Archive/Database/color.xml', tempPath]
 		  }
 		
 		  pythonshell.run('search.py', options, function(err, results) 
 		  {
 		    if (err) throw err;
-		    console.log('results: %j', results);
-		  });*/
+		    //console.log('results: %j', results);
+		    console.log(results);
+		    res.send(results);
+		  });
 		
 		
 		}
-		
-		
+			
   });
     
 }
@@ -80,9 +82,9 @@ exports.search = function(req, res){
 	// create query instance
 	
 	var inputquery = 'declare variable $stringList as xs:string external;' + 'for $node in doc("/home/kamikaze/Digital_Archive/Database/tags.xml")/images/image where $node/tag=tokenize($stringList, " ") return $node/source/text()';
-	var secondquery = 'for $img in (for $node in doc("/home/kamikaze/Digital_Archive/Database/colornew.xml")/images/item return $node)/image/item[type="str"] return ($img/image/item/text())';
+	//var secondquery = 'for $img in (for $node in doc("/home/kamikaze/Digital_Archive/Database/colornew.xml")/images/item return $node)/image/item[type="str"] return ($img/image/item/text())';
 	//var inputquery = 'declare variable $stringList as xs:string external;' + ' return element { $stringList }';
-	var query = session.query(secondquery);
+	var query = session.query(inputquery);
 	query.bind("stringList", string);
 
 	//var result = query.results(log.print);
