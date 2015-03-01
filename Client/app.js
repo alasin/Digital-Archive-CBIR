@@ -121,5 +121,7 @@ app.get('/uploads/thumbs/:file', function (req, res){
 
 });
 
+app.post('/uploadAutoPic', routes.uploadAutoPic);
 
-app.listen(8080)
+
+app.listen(8000)

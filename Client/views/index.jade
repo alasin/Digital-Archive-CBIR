@@ -3,8 +3,12 @@ html
     meta(charset='UTF-8')
     title
       | Digital Archive
-    script(type='text/javascript', src='javascripts/script.js')
+    
     script(src='javascripts/jquery-2.1.0.min.js')
+    script(src='javascripts/dropzone.js')
+    script(type='text/javascript', src='javascripts/script.js')
+    link(rel='stylesheet', href='stylesheets/dropzone.css')
+
     
        
   body
@@ -37,9 +41,11 @@ html
       img(id='image10' src='',alt='')
     a#link11.links(href='', style='padding:10px 10px 10px 10px;')
       img(id='image11' src='',alt='')
-          
+    
+    h6 Search by Image:
+    form#form2(action="uploadAutoPic" class="dropzone")
+    
     form#form1(name='searchImage', enctype='multipart/form-data')
-      h6 Search by Image:
       input#imageFilename(type='file', name='image')
       input#uploadbutton2(type='button', onClick='imageSearch()', value='Search')
       
@@ -63,3 +69,5 @@ html
       img(id='image900' src='',alt='')
     a#link1000.links(href='', style='padding:10px 10px 10px 10px;')
       img(id='image1000' src='',alt='')
+      
+    

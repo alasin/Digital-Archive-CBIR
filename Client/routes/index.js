@@ -1,12 +1,12 @@
 var fs = require('fs');
 var pythonshell = require('python-shell');
-
+var tempFile = require('tmp');
 
 
 
 exports.searchImage = function(req, res)
 {
-  //console.log(req.files.image.path)
+  console.log(req.files.image.path)
   fs.readFile(req.files.image.path, function (err, data) 
   {
 
@@ -25,6 +25,23 @@ exports.searchImage = function(req, res)
 		else
 		{
 
+		  
+		  tempFile.file({ template: '/home/kamikaze/Digital_Archive/Client/temp/tmp-XXXXXX.jpg' }, function _tempFileCreated(err, path, fd)
+		  {
+		    if (err) throw err;
+		    
+		    fs.writeFile(path, data, function (err) 
+		    {
+			//console.log("Temp File created");
+			if(err)
+			    throw err;
+							    
+		});
+		    
+		    });
+		  
+		  
+		    
 		  var newPath = "temp/" + imageName;
 		  var tempPath = "/home/kamikaze/Digital_Archive/Client/" + newPath 
 		  fs.writeFile(newPath, data, function (err) 
@@ -35,6 +52,10 @@ exports.searchImage = function(req, res)
 		      throw err;
 		    	  				
 		  });
+		  
+		  
+		  
+		    
 		  
 		  var options = 
 		  {
@@ -109,4 +130,81 @@ exports.search = function(req, res){
 		
 };
 
+exports.uploadAutoPic = function(req,res)
+{
+    //res.send("Pic uploaded");
+    fs.readFile(req.files.file.path, function (err, data) 
+  {
+
+		var response;
+		var imageName = req.files.file.name
+		//console.log(imageName)
+		/// If there's an error
+		if(!imageName){
+
+			console.log("There was an error")
+			res.redirect("/");
+			res.end();
+
+		} 
+		
+		else
+		{
+
+		  
+		  var tempPath ="";
+		  tempFile.file({ template: '/home/kamikaze/Digital_Archive/Client/temp/tmp-XXXXXX.jpg' }, function _tempFileCreated(err, path, fd)
+		  {
+		    if (err) 
+			throw err;
+		    tempPath = path;
+		    fs.writeFile(path, data, function (err) 
+		    {
+			//console.log("Temp File created");
+			if(err)
+			    throw err;
+							    
+		    });
+		    
+		    console.log(tempPath);
+		    var options = 
+		    {
+			mode: 'text',
+			scriptPath: '/home/kamikaze/Digital_Archive',
+			args: ['/home/kamikaze/Digital_Archive/Database', '/home/kamikaze/Digital_Archive/Database/color.xml', tempPath]
+		    }
+		
+		    pythonshell.run('search.py', options, function(err, results) 
+		    {
+			if (err) throw err;
+			//console.log('results: %j', results);
+			console.log(results);
+			res.send(results);
+		    });
+		    
+		    tempFile.setGracefulCleanup();
+		    
+		   });
+		  		  
+		  
+		  /*var newPath = "temp/" + imageName;
+		  var tempPath = "/home/kamikaze/Digital_Archive/Client/" + newPath 
+		  fs.writeFile(newPath, data, function (err) 
+		  
+		  {
+		    //console.log("Temp File created");
+		    if(err)
+		      throw err;
+		    	  				
+		  });
+		  */
+		  
+		  
+		
+		
+		}
+			
+  });
+    
+};
 
