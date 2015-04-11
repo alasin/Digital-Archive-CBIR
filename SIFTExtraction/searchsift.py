@@ -66,4 +66,4 @@ results = searcher.search(queryFeatures)
 for j in xrange(0, 10):
 	(score, imageName) = results[j]
 	print imageName
-	print score
+	#print score

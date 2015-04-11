@@ -23,8 +23,10 @@ exports.searchImage = function(req, res)
       else
       {
 	  var associativeArray = {};
+	  var associativeArrayFinal = new Array();
+	  var finalArray = new Array();
 	  
-	  tempFile.file({ template: '/home/kamikaze/Digital_Archive/Client/temp/tmp-XXXXXX.jpg' }, function _tempFileCreated(err, path, fd)
+	  tempFile.file({ template: '../Client/temp/tmp-XXXXXX.jpg' }, function _tempFileCreated(err, path, fd)
 	  {
 	      if (err) 
 		  throw err;
@@ -38,7 +40,7 @@ exports.searchImage = function(req, res)
 	  });
 	  
 	  var newPath = "temp/" + imageName;
-	  var tempPath = "/home/kamikaze/Digital_Archive/Client/" + newPath;
+	  var tempPath = "../Client/" + newPath;
 	  fs.writeFile(newPath, data, function (err)
 	  {
 	      //console.log("Temp File created");
@@ -51,8 +53,8 @@ exports.searchImage = function(req, res)
 	  var options = 
 	  {
 	      mode: 'text',
-	      scriptPath: '/home/kamikaze/Digital_Archive',
-	      args: ['/home/kamikaze/Digital_Archive/Database', '/home/kamikaze/Digital_Archive/Database/color.xml', tempPath]
+	      scriptPath: '../ColorExtraction',
+	      args: ['../Database', '../Database/color.xml', tempPath]
 	  }
 	  
 	  pythonshell.run('search.py', options, function(err, results) 
@@ -62,13 +64,51 @@ exports.searchImage = function(req, res)
 	      
 	      //console.log('results: %j', results);
 	      for(var i=0; i<results.length; i++)
-	      {
 		  associativeArray[results[i]] = i;
+	     	      
+	      console.log(associativeArray);
+	      //res.send(results);
+	      
+	      
+	      var options = 
+	      {
+		mode: 'text',
+		scriptPath: '../SIFTExtraction',
+		args: ['../Database', tempPath]
 	      }
 	      
-	      console.log(associativeArray);
-	      res.send(results);
+	      pythonshell.run('searchsift.py', options, function(err, results)
+	      {
+		  if (err)
+		    throw err;
+		  
+		  //console.log('results: %j', results);
+		  for(var i=0; i<results.length; i++)
+		  {
+		      var x = i + associativeArray[results[i]];
+		      if ((x-i) >= 0)
+			  associativeArrayFinal.push({name: results[i], val: x});
+		      else
+			  associativeArrayFinal.push({name: results[i], val: 20});	// Hard-coded
+		  }
+		  
+		  associativeArrayFinal.sort(function(a,b) 
+		  {
+		      return a.val - b.val;
+		  });
+		  
+		  len = associativeArrayFinal.length;
+			    
+		  for (var j = 0; j < len; j++)
+		      finalArray[j] = associativeArrayFinal[j].name;
+			
+		  console.log(associativeArrayFinal);
+		  //console.log(finalArray);
+		  res.send(finalArray);
+		});
+	      
 	  });
+	  
       }
       
   });
@@ -95,8 +135,10 @@ exports.searchImageDropzone = function(req, res)
       else
       {
 	  var associativeArray = {};
+	  var associativeArrayFinal = new Array();
+	  var finalArray = new Array();
 	  
-	  tempFile.file({ template: '/home/kamikaze/Digital_Archive/Client/temp/tmp-XXXXXX.jpg' }, function _tempFileCreated(err, path, fd)
+	  tempFile.file({ template: '../Client/temp/tmp-XXXXXX.jpg' }, function _tempFileCreated(err, path, fd)
 	  {
 	      if (err) 
 		  throw err;
@@ -110,7 +152,7 @@ exports.searchImageDropzone = function(req, res)
 	  });
 	  
 	  var newPath = "temp/" + imageName;
-	  var tempPath = "/home/kamikaze/Digital_Archive/Client/" + newPath;
+	  var tempPath = "../Client/" + newPath;
 	  fs.writeFile(newPath, data, function (err)
 	  {
 	      //console.log("Temp File created");
@@ -123,8 +165,8 @@ exports.searchImageDropzone = function(req, res)
 	  var options = 
 	  {
 	      mode: 'text',
-	      scriptPath: '/home/kamikaze/Digital_Archive',
-	      args: ['/home/kamikaze/Digital_Archive/Database', '/home/kamikaze/Digital_Archive/Database/color.xml', tempPath]
+	      scriptPath: '../ColorExtraction',
+	      args: ['../Database', '../Database/color.xml', tempPath]
 	  }
 	  
 	  pythonshell.run('search.py', options, function(err, results) 
@@ -134,13 +176,52 @@ exports.searchImageDropzone = function(req, res)
 	      
 	      //console.log('results: %j', results);
 	      for(var i=0; i<results.length; i++)
-	      {
 		  associativeArray[results[i]] = i;
+	     	      
+	      console.log(associativeArray);
+	      //res.send(results);
+	      
+	      
+	      var options = 
+	      {
+		mode: 'text',
+		scriptPath: '../SIFTExtraction',
+		args: ['../Database', tempPath]
 	      }
 	      
-	      console.log(associativeArray);
-	      res.send(results);
+	      pythonshell.run('searchsift.py', options, function(err, results)
+	      {
+		  if (err)
+		    throw err;
+		  
+		  //console.log('results: %j', results);
+		  for(var i=0; i<results.length; i++)
+		  {
+		      var x = i + associativeArray[results[i]];
+		      if ((x-i) >= 0)
+			  associativeArrayFinal.push({name: results[i], val: x});
+		      else
+			  associativeArrayFinal.push({name: results[i], val: 20});	// Hard-coded
+		  }
+		  
+		  associativeArrayFinal.sort(function(a,b) 
+		  {
+		      return a.val - b.val;
+		  });
+		  
+		  len = associativeArrayFinal.length;
+			    
+		  for (var j = 0; j < len; j++)
+		      finalArray[j] = associativeArrayFinal[j].name;
+			
+		  console.log(associativeArrayFinal);
+		  //console.log(finalArray);
+		  res.send(finalArray);
+		});
+	      
 	  });
+	  
+	  
       }
       
   });
