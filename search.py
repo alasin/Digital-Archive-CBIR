@@ -66,7 +66,6 @@ queryImage = cv2.imread(sys.argv[3])
 # describe the query
 desc = RGBHistogram([8, 8, 8])
 queryFeatures = desc.describe(queryImage)
-#print queryFeatures
 
 # load the index
 #index = cPickle.loads(open(args["index"]).read())
@@ -79,7 +78,9 @@ for i in new_index.keys():
   new_index[i] = new_index[i]["item"]
   new_index[i] = map(float, new_index[i])
    
-#print new_index["mandawa052.jpg"] 
+#print new_index["mandawa052.jpg"]
+#print type(new_index)
+
 searcher = Searcher(new_index)
 results = searcher.search(queryFeatures)
 

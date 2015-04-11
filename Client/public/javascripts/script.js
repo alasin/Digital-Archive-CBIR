@@ -46,9 +46,9 @@ function imageSearch() {
 	      //console.log("Image " + (i+1) + " Location: localhost:8080/uploads/" + data.result[i] + '\n');
 	      var dummyId = "image" + (i+1)*100;
 	      var dummyLinkId = "link" + (i+1)*100;
-	      console.log(dummyId);
-	      console.log(dummyLinkId);
-	      console.log(data[i]);
+	      //console.log(dummyId);
+	      //console.log(dummyLinkId);
+	      //console.log(data[i]);
 	      document.getElementById(dummyId).src= "http://localhost:8000/uploads/thumbs/" + data[i];
 	      document.getElementById(dummyLinkId).href= "http://localhost:8000/uploads/" + data[i];
 	    }
@@ -67,9 +67,9 @@ Dropzone.options.form2 = {
 	      //console.log("Image " + (i+1) + " Location: localhost:8080/uploads/" + data.result[i] + '\n');
 	      var dummyId = "image" + (i+1)*100;
 	      var dummyLinkId = "link" + (i+1)*100;
-	      console.log(dummyId);
-	      console.log(dummyLinkId);
-	      console.log(data[i]);
+	      //console.log(dummyId);
+	      //console.log(dummyLinkId);
+	      //console.log(data[i]);
 	      document.getElementById(dummyId).src= "http://localhost:8000/uploads/thumbs/" + data[i];
 	      document.getElementById(dummyLinkId).href= "http://localhost:8000/uploads/" + data[i];
 	    }
