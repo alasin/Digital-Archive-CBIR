@@ -1,0 +1,7 @@
+This code is for generating a vocabulary of visual bag-of-words or bag-of-features for the images. It has to be run only once, after uploading the image dataset.
+
+HOW TO USE 'createVocab.cpp':
+1. Use 'cmake .' or 'cmake ..' depending on your preferred build location to generate the 'Makefile'.
+2. Run 'make' to get the 'createVocabulary' executable.
+3. Run './createVocabulary [arg1] [arg2]' where arg1 is the parent directory of images and arg2 is the directory where you want to store the dictionary/vocabulary and the individual image descriptors of images. Note that image descriptors would be stored in [arg2]/siftdescriptors/, therefore, ensure that you have an empty directory named 'siftdescriptors' inside the folder [arg2].
+

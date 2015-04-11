@@ -1,0 +1,1 @@
+/home/kamikaze/Digital_Archive/SIFTExtraction/build/CMakeFiles/createVocabulary.dir
