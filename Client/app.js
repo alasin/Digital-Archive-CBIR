@@ -51,4 +51,4 @@ app.get('/uploads/thumbs/:file', function (req, res){
 app.post('/searchImageDropzone', routes.searchImageDropzone);
 
 
-app.listen(8000)
+app.listen(8080)

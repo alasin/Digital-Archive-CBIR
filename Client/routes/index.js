@@ -1,11 +1,12 @@
 var fs = require('fs');
 var pythonshell = require('python-shell');
-var tempFile = require('tmp');
+//var tempFile = require('tmp');
 
 
 exports.searchImage = function(req, res)
 {
   console.log(req.files.image.path)
+  var tempPath = req.files.image.path;
   fs.readFile(req.files.image.path, function (err, data) 
   {
       var response;
@@ -26,7 +27,7 @@ exports.searchImage = function(req, res)
 	  var associativeArrayFinal = new Array();
 	  var finalArray = new Array();
 	  
-	  tempFile.file({ template: '../Client/temp/tmp-XXXXXX.jpg' }, function _tempFileCreated(err, path, fd)
+	  /*tempFile.file({ template: '../Client/temp/tmp-XXXXXX.jpg' }, function _tempFileCreated(err, path, fd)
 	  {
 	      if (err) 
 		  throw err;
@@ -37,9 +38,9 @@ exports.searchImage = function(req, res)
 		  if(err)
 		      throw err;
 	      });
-	  });
+	  });*/
 	  
-	  var newPath = "temp/" + imageName;
+	  /*var newPath = "temp/" + imageName;
 	  var tempPath = "../Client/" + newPath;
 	  fs.writeFile(newPath, data, function (err)
 	  {
@@ -48,7 +49,7 @@ exports.searchImage = function(req, res)
 		  throw err;
 	      
 	      
-	  });
+	  });*/
 	  
 	  var options = 
 	  {
@@ -118,6 +119,8 @@ exports.searchImage = function(req, res)
 exports.searchImageDropzone = function(req, res)
 {
   console.log(req.files.file.path)
+  var tempPath = req.files.image.path;
+
   fs.readFile(req.files.file.path, function (err, data) 
   {
       var response;
@@ -138,7 +141,7 @@ exports.searchImageDropzone = function(req, res)
 	  var associativeArrayFinal = new Array();
 	  var finalArray = new Array();
 	  
-	  tempFile.file({ template: '../Client/temp/tmp-XXXXXX.jpg' }, function _tempFileCreated(err, path, fd)
+	  /*tempFile.file({ template: '../Client/temp/tmp-XXXXXX.jpg' }, function _tempFileCreated(err, path, fd)
 	  {
 	      if (err) 
 		  throw err;
@@ -149,9 +152,9 @@ exports.searchImageDropzone = function(req, res)
 		  if(err)
 		      throw err;
 	      });
-	  });
+	  });*/
 	  
-	  var newPath = "temp/" + imageName;
+	  /*var newPath = "temp/" + imageName;
 	  var tempPath = "../Client/" + newPath;
 	  fs.writeFile(newPath, data, function (err)
 	  {
@@ -160,7 +163,7 @@ exports.searchImageDropzone = function(req, res)
 		  throw err;
 	      
 	      
-	  });
+	  });*/
 	  
 	  var options = 
 	  {
