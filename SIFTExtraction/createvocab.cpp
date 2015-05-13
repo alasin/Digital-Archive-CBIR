@@ -12,6 +12,8 @@ using namespace std;
 
 int main(int argc, char* argv[])
 {
+    int minHessian = 400; //Hessian Threshold
+
     char * filename = new char[100];
     //to store the current input image
     Mat input;
@@ -54,19 +56,20 @@ int main(int argc, char* argv[])
     int dictionarySize = 200;
     TermCriteria tc(CV_TERMCRIT_ITER, 100, 0.001);
     int retries = 1;
-    int flags = KMEANS_PP_CENTERS;
+    int flags = KMEANS_RANDOM_CENTERS;
     
     BOWKMeansTrainer bowTrainer(dictionarySize,tc,retries,flags);
+    //cout << "I'm here too\n";
+        
     Mat dictionary = bowTrainer.cluster(featuresUnclustered);
-    
-    
+        
     sprintf(filename, "%s/dictionary.yml", argv[2]);
     FileStorage fs(filename, FileStorage::WRITE);
     fs << "vocabulary" << dictionary;
     fs.release();
     
     //create a nearest neighbor matcher
-    Ptr<DescriptorMatcher> matcher(new FlannBasedMatcher);
+    Ptr<DescriptorMatcher> matcher(new FlannBasedMatcher);    
     //create Sift feature point extracter
     Ptr<FeatureDetector> siftdetector(new SiftFeatureDetector());
     //create Sift descriptor extractor

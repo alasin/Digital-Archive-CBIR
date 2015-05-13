@@ -8,14 +8,21 @@ html
     
        
     form(method='post', action='/upload', enctype='multipart/form-data')
-      h6 Add image:
+      h3 Add image:
       input(type='file', name='image')
+      
+      h4 Location:
+      textarea(name = 'locationtag', cols='16', rows='1')
+      h4 Period:
+      textarea(name = 'periodtag', cols='16', rows='1')
+      h4 Style:
+      textarea(name = 'styletag', cols='16', rows='1')
+      h4 Theme:
+      textarea(name = 'themetag', cols='16', rows='1')
+      h4 Object of the picture:
+      textarea(name = 'objecttag', cols='16', rows='1')
       br
-      textarea#tag1(name = 'tag1', cols='8', rows='1')
-      textarea#tag2(name = 'tag2', cols='8', rows='1')
-      textarea#tag3(name = 'tag3', cols='8', rows='1')
-      textarea#tag4(name = 'tag4', cols='8', rows='1')
       br
-      input#uploadbutton(type='submit', value='Upload and Add Tags')
+      input#uploadbutton(type='submit', value='Upload Image and Tags')
       
     

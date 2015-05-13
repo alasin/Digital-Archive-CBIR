@@ -27,19 +27,6 @@ exports.searchImage = function(req, res)
 	  var associativeArrayFinal = new Array();
 	  var finalArray = new Array();
 	  
-	  /*tempFile.file({ template: '../Client/temp/tmp-XXXXXX.jpg' }, function _tempFileCreated(err, path, fd)
-	  {
-	      if (err) 
-		  throw err;
-	      
-	      fs.writeFile(path, data, function (err)
-	      {
-		  //console.log("Temp File created");
-		  if(err)
-		      throw err;
-	      });
-	  });*/
-	  
 	  /*var newPath = "temp/" + imageName;
 	  var tempPath = "../Client/" + newPath;
 	  fs.writeFile(newPath, data, function (err)
@@ -119,7 +106,7 @@ exports.searchImage = function(req, res)
 exports.searchImageDropzone = function(req, res)
 {
   console.log(req.files.file.path)
-  var tempPath = req.files.image.path;
+  var tempPath = req.files.file.path;
 
   fs.readFile(req.files.file.path, function (err, data) 
   {
@@ -140,19 +127,6 @@ exports.searchImageDropzone = function(req, res)
 	  var associativeArray = {};
 	  var associativeArrayFinal = new Array();
 	  var finalArray = new Array();
-	  
-	  /*tempFile.file({ template: '../Client/temp/tmp-XXXXXX.jpg' }, function _tempFileCreated(err, path, fd)
-	  {
-	      if (err) 
-		  throw err;
-	      
-	      fs.writeFile(path, data, function (err)
-	      {
-		  //console.log("Temp File created");
-		  if(err)
-		      throw err;
-	      });
-	  });*/
 	  
 	  /*var newPath = "temp/" + imageName;
 	  var tempPath = "../Client/" + newPath;
@@ -243,6 +217,8 @@ exports.search = function(req, res){
 	var resultArray = new Array();
 	//console.log(req.body);
 	var string = req.body.searchQuery;
+	var searchType = req.body.searchType;
+	console.log(searchType);
 	string = string.toLowerCase();
 	var splitstring = string.split(' ');
 	console.log(splitstring);
@@ -254,11 +230,13 @@ exports.search = function(req, res){
 	basex.debug_mode = false;
 	// create query instance
 	
-	var inputquery = 'declare variable $stringList as xs:string external;' + 'for $node in doc("/home/kamikaze/Digital_Archive/Database/tags.xml")/images/image where $node/tag=tokenize($stringList, " ") return $node/source/text()';
+	var inputquery = 'declare variable $stringList as xs:string external;' + 'declare variable $searchTag as xs:string external;' + 'for $node in doc("/home/kamikaze/Digital_Archive/Database/tags.xml")/images/image where $node/'+ searchType + '=tokenize($stringList, " ") return $node/source/text()';
+	//var inputquery = 'declare variable $stringList as xs:string external;' + 'for $node in doc("/home/kamikaze/Digital_Archive/Database/tags.xml")/images/image where $node/tag=tokenize($stringList, " ") return $node/source/text()';
 	//var secondquery = 'for $img in (for $node in doc("/home/kamikaze/Digital_Archive/Database/colornew.xml")/images/item return $node)/image/item[type="str"] return ($img/image/item/text())';
 	//var inputquery = 'declare variable $stringList as xs:string external;' + ' return element { $stringList }';
 	var query = session.query(inputquery);
 	query.bind("stringList", string);
+	query.bind("searchTag", searchType);
 
 	//var result = query.results(log.print);
 	

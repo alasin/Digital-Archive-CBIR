@@ -12,11 +12,26 @@ html
     
        
   body
-    h6 Search by tags:
+    h4 Search by tags:
+       h5 -- Location &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp -- Object &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp -- Theme &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp -- Style
     forms
-      textarea#searchBox(name='searchBox', cols='10', rows='1')
+      textarea#locationSearchBox(cols='13', rows='1') 
+      &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp 
+      textarea#objectSearchBox(cols='13', rows='1')
+      &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
+      textarea#themeSearchBox(cols='13', rows='1')
+      &nbsp &nbsp &nbsp &nbsp &nbsp   
+      textarea#styleSearchBox(cols='13', rows='1')
       br
-      button#searchButton(type='submit', style="height: 20px; width: 80px", onclick='initAll()') Search
+      button#locationSearchButton(type='submit', style="height: 25px; width: 80px", onclick='locationSearch()') Search
+      &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
+      button#objectSearchButton(type='submit', style="height: 25px; width: 80px", onclick='objectSearch()') Search
+      &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
+      button#themeSearchButton(type='submit', style="height: 25px; width: 80px", onclick='themeSearch()') Search
+      &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp 
+      button#styleSearchButton(type='submit', style="height: 25px; width: 80px", onclick='styleSearch()') Search
+      br
+      br
       
     
     a#link1.links(href='', style='padding:10px 10px 10px 10px;')
@@ -42,7 +57,7 @@ html
     a#link11.links(href='', style='padding:10px 10px 10px 10px;')
       img(id='image11' src='',alt='')
     
-    h6 Search by Image:
+    h4 Search by Image:
     form#form2(action="searchImageDropzone" class="dropzone")
     
     form#form1(name='searchImage', enctype='multipart/form-data')

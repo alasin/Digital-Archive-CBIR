@@ -3,7 +3,7 @@ var routes = require('./routes');
 var path = require('path');
 var libxmljs = require("libxmljs");
 var fs = require('fs');
-var im = require('imagemagick');
+var im = require('imagemagick-native');
 
 var app = express()
 
@@ -41,22 +41,34 @@ app.post('/upload', function(req, res) {
 		  // Write file to Database/fullsize and Database/thumbs folder
 		  fs.writeFile(newPath, data, function (err) {
 
-		  	var tag1 = req.body.tag1;
-		  	var tag2 = req.body.tag2;
-			var tag3 = req.body.tag3; 
-		  	var tag4 = req.body.tag4;
+		  	var locationtag = req.body.locationtag;
+		  	var periodtag = req.body.periodtag;
+			var styletag = req.body.styletag; 
+		  	var themetag = req.body.themetag;
+			var objecttag = req.body.objecttag;
 			var count = 0;
 			
 			//console.log(thumbPath);
-			im.resize({
+			/*im.convert({
 				  srcPath: newPath,
 				  dstPath: thumbPath,
 				  width:   100,
-				  height:  100
+				  height:  100,
+				  resizeStyle: 'aspectfill',
+				  gravity: 'Center'
+				    
 				}, function(err, stdout, stderr){
 				  if (err) throw err;
 				  console.log('resized image to fit within 100x100px');
-				});
+				});*/
+			
+			fs.writeFileSync(thumbPath, im.convert({
+			    srcData: fs.readFileSync(newPath),
+			    width: 100,
+			    height: 100,
+			    resizeStyle: 'aspectfill', // is the default, or 'aspectfit' or 'fill'
+			    gravity: 'Center' // optional: position crop area when using 'aspectfill'
+			}));
 
 			
 			fs.readFile('../Database/tags.xml', 'utf8', function (err, data) {
@@ -69,10 +81,12 @@ app.post('/upload', function(req, res) {
 			  var rootnode = xmlDoc.root();
 			  elem = new libxmljs.Element(xmlDoc, 'image');
 			  dummy = rootnode.addChild(elem);
-			  dummy = elem.addChild(new libxmljs.Element(xmlDoc, 'tag', tag1));
-			  dummy = elem.addChild(new libxmljs.Element(xmlDoc, 'tag', tag2));
-			  dummy = elem.addChild(new libxmljs.Element(xmlDoc, 'tag', tag3));
-			  dummy = elem.addChild(new libxmljs.Element(xmlDoc, 'tag', tag4));
+			  dummy = elem.addChild(new libxmljs.Element(xmlDoc, 'location', locationtag));
+			  dummy = elem.addChild(new libxmljs.Element(xmlDoc, 'period', periodtag));
+			  dummy = elem.addChild(new libxmljs.Element(xmlDoc, 'style', styletag));
+			  dummy = elem.addChild(new libxmljs.Element(xmlDoc, 'theme', themetag));
+			  dummy = elem.addChild(new libxmljs.Element(xmlDoc, 'object', objecttag));
+			  
 			  dummy = elem.addChild(new libxmljs.Element(xmlDoc, 'source', imageName));
 			  			  
 			  console.log(xmlDoc.toString());
