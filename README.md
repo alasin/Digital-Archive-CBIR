@@ -1,6 +1,6 @@
 # Digital-Archive-CBIR
 
-This is a simple tag and content-based image retrieval platform built atop Node.js. Express framework has been used for frontend. This is by no-means a flawless platform structure and does require some work. Suggestions are welcome.
+This is a simple tag and content-based image retrieval platform built atop Node.js. Express framework has been used for frontend. By no means is this a flawless platform structure and does require some work. OpenCV code is fairly modularized and could be used independently for other projects. Suggestions are welcome.
 
 XQuery based BaseX XML engine has been used for tag-based search. For CBIR, a 3D color histogram based technique and a Bag-of-Features descriptor model on SIFT features has been used.
 
