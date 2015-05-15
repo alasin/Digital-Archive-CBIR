@@ -10,4 +10,4 @@ This is the node.js app for client interface i.e. the interface where the queryi
 
 - **package.json** isn't updated as it isn't important.
 
-- **app.js** contains the driver code for running the code. Type `nodemon app` or `node app` to start the server at `localhost:8080`. Modify this file to change the server properties like listening port etc.
+- **app.js** contains the driver code for running the app. Type `nodemon app` or `node app` to start the server at `localhost:8080`. Modify this file to change the server properties like listening port etc.
