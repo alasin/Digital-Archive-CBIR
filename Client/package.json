@@ -1,13 +1,15 @@
 {
-  "name": "Development",
+  "name": "Digital_Archive",
   "version": "0.0.0",
-  "description": "Digital Archive",
+  "description": "Client-side",
   "scripts": {
     "start": "node app.js"
   },
   "dependencies": {
     "express": "3.4.8",
-    "jade": "*"
-    
+    "jade": "*",
+    "basex": "*",
+    "python-shell": "*",
+    "libxmljs": "*"
   }
 }
