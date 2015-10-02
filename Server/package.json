@@ -1,13 +1,14 @@
 {
-  "name": "Development",
-  "version": "0.0.0",
-  "description": "Digital Archive Server",
+  "name": "Digital_Archive",
+  "version": "1.0.0",
+  "description": "Server-side",
   "scripts": {
     "start": "node app.js"
   },
   "dependencies": {
     "express": "3.4.8",
-    "jade": "*"
-    
+    "jade": "*",
+    "libxmljs": "*",
+    "imagemagick-native": "*"
   }
 }
