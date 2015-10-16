@@ -1,47 +1,53 @@
-exports.search = function(req, res) {
-  	var count = 0;
-	var tagCount;
-	var tagValue;
-	//var tagsArray = new Array();
-	var resultArray = new Array();
+exports.tagSearch = function(req, res)
+{
+    var count = 0;
+    var tagCount;
+    var tagValue;
+    //var tagsArray = new Array();
+    var resultArray = new Array();
+    //console.log(req.body);
+    var string = req.body.searchQuery;
+    var searchType = req.body.searchType;
+    console.log(searchType);
+    string = string.toLowerCase();
+    var splitstring = string.split(' ');
+    console.log(splitstring);
+    var basex = require('basex');
+    var log = require("../node_modules/basex/debug");
 
-	var string = req.body.searchBox;
-	string = string.toLowerCase();
-	var splitstring = string.split(' ');
-	console.log(splitstring);
-	res.end();
+    // create session
+    var session = new basex.Session();
+    basex.debug_mode = false;
+    // create query instance
 
-	/*console.log("Tags searched: " + res);
+    var inputquery = 'declare variable $stringList as xs:string external;' + 'declare variable $searchTag as xs:string external;' + 'for $node in doc("/home/kamikaze/Digital_Archive/Database/tags.xml")/images/image where $node/'+ searchType + '=tokenize($stringList, " ") return $node/source/text()';
+    //var inputquery = 'declare variable $stringList as xs:string external;' + 'for $node in doc("/home/kamikaze/Digital_Archive/Database/tags.xml")/images/image where $node/tag=tokenize($stringList, " ") return $node/source/text()';
+    //var secondquery = 'for $img in (for $node in doc("/home/kamikaze/Digital_Archive/Database/colornew.xml")/images/item return $node)/image/item[type="str"] return ($img/image/item/text())';
+    //var inputquery = 'declare variable $stringList as xs:string external;' + ' return element { $stringList }';
+    var query = session.query(inputquery);
+    query.bind("stringList", string);
+    query.bind("searchTag", searchType);
 
-	for (var i=0; i<allTags.length; i++) {
-	      tagCount = allTags[i].getElementsByTagName("tag").length;
+    //var result = query.results(log.print);
 
-	      for (var j=0; j<tagCount; j++)
-	      {
-			tagValue = allTags[i].getElementsByTagName("tag")[j].firstChild;
+    var resultArray = query.results(function(err, resultArray)
+    {
+        if (err)
+            console.log("Error: " + err);
+        else
+        {
+            res.send(resultArray);
+            console.log(resultArray);
+        }
 
-			if (tagValue)
-			{
-			  for (var k=0; k<res.length; k++)
-			  {
-			    if (tagValue.nodeValue == res[k]) {
-			    resultArray[count] = allTags[i].getElementsByTagName("source")[0].firstChild;
-			    var src = resultArray[count].nodeValue;
-			    count = count+1;
+    });
 
-			    console.log("Image " + count + " Name: " + src);
-			    console.log("Image " + count + " Location: localhost:8080/uploads/" + src);
+    // close query instance
+    query.close();
 
+    // close session
+    session.close();
 
-			    break;
-			  	}
+    //res.end();
 
-			  }
-			}
-
-	      }
-
-		}
-
-		console.log("Total " + count + " relevant images were found");*/
 };
