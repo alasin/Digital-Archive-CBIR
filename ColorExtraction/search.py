@@ -13,7 +13,7 @@ class RGBHistogram:
 	def describe(self, image):
 		hist = cv2.calcHist([image], [0, 1, 2],
 			None, self.bins, [0, 256, 0, 256, 0, 256])
-		hist = cv2.normalize(hist)
+		cv2.normalize(hist, hist)
 
 		# return out 3D histogram as a flattened array
 		return hist.flatten()
@@ -42,8 +42,8 @@ class Searcher:
 			for (a, b) in zip(histA, histB)])
 
 		return d
-	      
-	      
+
+
 
 #ap = argparse.ArgumentParser()
 
@@ -77,7 +77,7 @@ new_index = dict(index.values()[0])
 for i in new_index.keys():
   new_index[i] = new_index[i]["item"]
   new_index[i] = map(float, new_index[i])
-   
+
 #print new_index["mandawa052.jpg"]
 #print type(new_index)
 
@@ -86,7 +86,7 @@ results = searcher.search(queryFeatures)
 
 # loop over the top ten results
 for j in xrange(0, 10):
-	
+
 	(score, imageName) = results[j]
 	path1 = sys.argv[1] + "/fullsize/%s" % (imageName)
 	path2 = sys.argv[1] + "/thumbs/%s" % (imageName)
@@ -95,4 +95,3 @@ for j in xrange(0, 10):
 	#print "%s" % (path1)
 	#print "%s" % (path2)
 	print imageName
-	
