@@ -2,7 +2,6 @@ var express = require('express');
 var routes = require('./routes');
 var search = require('./routes/search')
 var path = require('path');
-var libxmljs = require("libxmljs");
 var fs = require('fs');
 
 var app = express()
@@ -17,10 +16,10 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.get('/', routes.index);
 app.post('/search', search.tagSearch);
-app.post('/searchImage', routes.searchImage);
+app.post('/searchImage', search.imageSearch);
+app.post('/searchImageDropzone', search.imageSearchDropzone);
 
 var xmlDoc, dummy, elem;
-
 /// Show files
 app.get('/uploads/:file', function (req, res) {
 	//console.log("Inside fullsize");
@@ -37,7 +36,5 @@ app.get('/uploads/thumbs/:file', function (req, res) {
 	res.writeHead(200, {'Content-Type': 'image/jpg'});
 	res.end(img, 'binary');
 });
-
-app.post('/searchImageDropzone', routes.searchImageDropzone);
 
 app.listen(8080)
