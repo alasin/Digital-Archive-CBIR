@@ -22,7 +22,7 @@ exports.tagSearch = function(req, res) {
     basex.debug_mode = false;
     // create query instance
 
-    var inputquery = 'declare variable $stringList as xs:string external;' + 'declare variable $searchTag as xs:string external;' + 'for $node in doc("/home/kamikaze/Digital_Archive/Database/tags.xml")/images/image where $node/'+ searchType + '=tokenize($stringList, " ") return $node/source/text()';
+    var inputquery = 'declare variable $stringList as xs:string external;' + 'declare variable $searchTag as xs:string external;' + 'for $node in doc("/home/kamikaze/Digital_Archive/Database/tags.xml")/images/image where $node/' + searchType + '=tokenize($stringList, " ") return $node/source/text()';
     //var inputquery = 'declare variable $stringList as xs:string external;' + 'for $node in doc("/home/kamikaze/Digital_Archive/Database/tags.xml")/images/image where $node/tag=tokenize($stringList, " ") return $node/source/text()';
     //var secondquery = 'for $img in (for $node in doc("/home/kamikaze/Digital_Archive/Database/colornew.xml")/images/item return $node)/image/item[type="str"] return ($img/image/item/text())';
     //var inputquery = 'declare variable $stringList as xs:string external;' + ' return element { $stringList }';
@@ -51,13 +51,13 @@ exports.tagSearch = function(req, res) {
 exports.imageSearch = function(req, res) {
     console.log(req.files.image.path)
     var tempPath = req.files.image.path;
-    fs.readFile(req.files.image.path, function (err, data) {
+    fs.readFile(req.files.image.path, function(err, data) {
         var response;
         var imageName = req.files.image.name;
 
         //console.log(imageName)
         // If there's an error
-        if(!imageName) {
+        if (!imageName) {
             console.log("There was an error")
             res.redirect("/");
             res.end();
@@ -77,7 +77,7 @@ exports.imageSearch = function(req, res) {
                     throw err;
 
                 //console.log('results: %j', results);
-                for(var i = 0; i < results.length; i++)
+                for (var i = 0; i < results.length; i++)
                     associativeArray[results[i]] = i;
 
                 console.log(associativeArray);
@@ -94,15 +94,21 @@ exports.imageSearch = function(req, res) {
                         throw err;
 
                     //console.log('results: %j', results);
-                    for(var i = 0; i < results.length; i++) {
+                    for (var i = 0; i < results.length; i++) {
                         var x = i + associativeArray[results[i]];
-                        if ((x-i) >= 0)
-                            associativeArrayFinal.push({name: results[i], val: x});
+                        if ((x - i) >= 0)
+                            associativeArrayFinal.push({
+                                name: results[i],
+                                val: x
+                            });
                         else
-                            associativeArrayFinal.push({name: results[i], val: 20});	// Hard-coded
+                            associativeArrayFinal.push({
+                                name: results[i],
+                                val: 20
+                            }); // Hard-coded
                     }
 
-                    associativeArrayFinal.sort(function(a,b) {
+                    associativeArrayFinal.sort(function(a, b) {
                         return a.val - b.val;
                     });
 
@@ -124,11 +130,11 @@ exports.imageSearchDropzone = function(req, res) {
     // console.log(req.files.file.path)
     var tempPath = req.files.file.path;
 
-    fs.readFile(req.files.file.path, function (err, data) {
+    fs.readFile(req.files.file.path, function(err, data) {
         var response;
         var imageName = req.files.file.name;
 
-        if(!imageName) {
+        if (!imageName) {
             console.log("There was an error")
             res.redirect("/");
             res.end();
@@ -148,7 +154,7 @@ exports.imageSearchDropzone = function(req, res) {
                     throw err;
 
                 //console.log('results: %j', results);
-                for(var i = 0; i < results.length; i++)
+                for (var i = 0; i < results.length; i++)
                     associativeArray[results[i]] = i;
 
                 console.log(associativeArray);
@@ -165,15 +171,21 @@ exports.imageSearchDropzone = function(req, res) {
                         throw err;
 
                     //console.log('results: %j', results);
-                    for(var i = 0; i < results.length; i++) {
+                    for (var i = 0; i < results.length; i++) {
                         var x = i + associativeArray[results[i]];
-                        if ((x-i) >= 0)
-                            associativeArrayFinal.push({name: results[i], val: x});
+                        if ((x - i) >= 0)
+                            associativeArrayFinal.push({
+                                name: results[i],
+                                val: x
+                            });
                         else
-                            associativeArrayFinal.push({name: results[i], val: 20});	// Hard-coded
+                            associativeArrayFinal.push({
+                                name: results[i],
+                                val: 20
+                            }); // Hard-coded
                     }
 
-                    associativeArrayFinal.sort(function(a,b) {
+                    associativeArrayFinal.sort(function(a, b) {
                         return a.val - b.val;
                     });
 
