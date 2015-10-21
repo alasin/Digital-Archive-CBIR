@@ -8,7 +8,7 @@ var im = require('imagemagick-native');
 var app = express()
 
 /// Include the express body parser
-app.configure(function () {
+app.configure(function() {
     app.use(express.bodyParser());
 });
 
@@ -22,10 +22,10 @@ var xmlDoc, dummy, elem;
 // Post files
 app.post('/upload', function(req, res) {
 
-    fs.readFile(req.files.image.path, function (err, data) {
+    fs.readFile(req.files.image.path, function(err, data) {
         var imageName = req.files.image.name
 
-        if(!imageName) {
+        if (!imageName) {
             console.log("There was an error")
             res.redirect("/");
             res.end();
@@ -35,7 +35,7 @@ app.post('/upload', function(req, res) {
             var thumbPath = "../Database/thumbs/" + imageName;
 
             // Write file to Database/fullsize and Database/thumbs folder
-            fs.writeFile(newPath, data, function (err) {
+            fs.writeFile(newPath, data, function(err) {
 
                 var locationtag = req.body.locationtag;
                 var periodtag = req.body.periodtag;
@@ -52,7 +52,7 @@ app.post('/upload', function(req, res) {
                     gravity: 'Center' // optional: position crop area when using 'aspectfill'
                 }));
 
-                fs.readFile('../Database/tags.xml', 'utf8', function (err, data) {
+                fs.readFile('../Database/tags.xml', 'utf8', function(err, data) {
                     console.log(thumbPath)
                     if (err)
                         throw err;
@@ -72,9 +72,9 @@ app.post('/upload', function(req, res) {
 
                     console.log(xmlDoc.toString());
 
-                    fs.writeFile('../Database/tags.xml', xmlDoc.toString(), function (err) {
+                    fs.writeFile('../Database/tags.xml', xmlDoc.toString(), function(err) {
                         if (err)
-                        throw err;
+                            throw err;
                         console.log('Updated!');
                     });
                 });
@@ -86,17 +86,21 @@ app.post('/upload', function(req, res) {
 });
 
 /// Show files
-app.get('/uploads/:file', function (req, res) {
+app.get('/uploads/:file', function(req, res) {
     file = req.params.file;
     var img = fs.readFileSync("../Database/fullsize/" + file);
-    res.writeHead(200, {'Content-Type': 'image/jpg'});
+    res.writeHead(200, {
+        'Content-Type': 'image/jpg'
+    });
     res.end(img, 'binary');
 });
 
-app.get('/uploads/thumbs/:file', function (req, res) {
+app.get('/uploads/thumbs/:file', function(req, res) {
     file = req.params.file;
     var img = fs.readFileSync("../Database/thumbs/" + file);
-    res.writeHead(200, {'Content-Type': 'image/jpg'});
+    res.writeHead(200, {
+        'Content-Type': 'image/jpg'
+    });
     res.end(img, 'binary');
 });
 
