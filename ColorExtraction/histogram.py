@@ -38,6 +38,13 @@ f = open(args["index"], "w")
 imagePaths = glob.glob(args["dataset"] + "/*.jpg")
 imagePaths.extend(glob.glob(args["dataset"] + "/*.JPG"))
 imagePaths.extend(glob.glob(args["dataset"] + "/*.png"))
+imagePaths.extend(glob.glob(args["dataset"] + "/*.PNG"))
+imagePaths.extend(glob.glob(args["dataset"] + "/*.gif"))
+imagePaths.extend(glob.glob(args["dataset"] + "/*.GIF"))
+imagePaths.extend(glob.glob(args["dataset"] + "/*.bmp"))
+imagePaths.extend(glob.glob(args["dataset"] + "/*.BMP"))
+imagePaths.extend(glob.glob(args["dataset"] + "/*.TIFF"))
+imagePaths.extend(glob.glob(args["dataset"] + "/*.tiff"))
 
 for imagePath in imagePaths:
 	k = imagePath[imagePath.rfind("/") + 1:]
