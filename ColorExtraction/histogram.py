@@ -1,6 +1,5 @@
 import numpy as np
 import argparse
-import cPickle
 import glob
 import cv2
 import dicttoxml
