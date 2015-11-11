@@ -2,6 +2,8 @@ import cv2
 import sys
 import numpy
 import os
+#import xmltodict
+
 
 class Searcher:
 	def __init__(self, index):
@@ -27,17 +29,33 @@ class Searcher:
 
 		return d
 
-
 index = {}
 
 dictionary = numpy.asarray(cv2.cv.Load(sys.argv[1] + '/dictionary.yml'))
+#xmldict = dict(xmltodict.parse(open(sys.argv[1] + '/dictionary.xml').read()))
+#stringdict = xmldict.values()[0].values()[0]["data"].split()
+#dictionary = numpy.asarray(map(float, stringdict))
 
+numfiles = 0
 dir_name = sys.argv[1] + '/siftdescriptors'
 for files in os.listdir(dir_name):
-    key = os.path.splitext(files)[0] + '.jpg'
-    array = numpy.asarray(cv2.cv.Load(dir_name + '/' + files))[0]
-    index[key] = array
-    
+	(key, ext) = os.path.splitext(files)
+	if (ext == '.yml'):
+		fmtindex = key.rindex("*")
+		imname = key[0:fmtindex]
+		fmt = key[fmtindex + 1:]
+		array = numpy.asarray(cv2.cv.Load(dir_name + '/' + files))[0]
+		index[imname + "." + fmt] = array
+		numfiles = numfiles + 1
+
+	# key = os.path.splitext(files)[0]
+	# ext = os.path.splitext(files)[1]
+	# if (ext == '.xml'):
+	# 	xmldict = dict(xmltodict.parse(open(dir_name + '/' + files).read()))
+	# 	stringdict = xmldict.values()[0].values()[0]["data"].split()
+	# 	array = numpy.asarray(map(float, stringdict))
+	# 	index[key] = array
+
 #print index
 
 detector = cv2.FeatureDetector_create("SIFT")
@@ -52,18 +70,24 @@ bowDE = cv2.BOWImgDescriptorExtractor(extractor, matcher)
 bowDE.setVocabulary(dictionary)
 
 queryImage = cv2.imread(sys.argv[2])
+# print type(queryImage)
 
 keypoints = []
 keypoints = detector.detect(queryImage)
+# print "yes"
 
+# print "No"
 bowDescriptor = bowDE.compute(queryImage, keypoints)
+# print "yes"
 queryFeatures = bowDescriptor[0]
+# print "yes"
 
 searcher = Searcher(index)
 results = searcher.search(queryFeatures)
 
+# print results
 # loop over the top ten results
-for j in xrange(0, 10):
+for j in xrange(0, min(numfiles, 10)):
 	(score, imageName) = results[j]
 	print imageName
 	#print score

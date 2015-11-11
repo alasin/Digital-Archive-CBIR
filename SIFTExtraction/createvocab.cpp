@@ -1,6 +1,6 @@
 #include "opencv2/highgui/highgui.hpp"
 #include "opencv2/imgproc/imgproc.hpp"
-#include "opencv2/xfeatures2d/nonfree.hpp"
+#include "opencv2/nonfree/features2d.hpp"
 #include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
@@ -9,7 +9,6 @@
 #include <algorithm>
 
 using namespace cv;
-using namespace xfeatures2d;
 using namespace std;
 
 int main(int argc, char* argv[])
@@ -38,7 +37,7 @@ int main(int argc, char* argv[])
     Mat featuresUnclustered;
 
     //The SIFT feature extractor and descriptor
-    Ptr<SiftDescriptorExtractor> detector = SIFT::create();;
+    SiftDescriptorExtractor detector;
 
     DIR *dir;
     struct dirent *ent;
@@ -58,8 +57,8 @@ int main(int argc, char* argv[])
                     sprintf(filename, "%s/%s",argv[1], ent->d_name);
                     printf("%s\n", filename);
                     input = imread(filename, CV_LOAD_IMAGE_GRAYSCALE);
-                    detector->detect(input, keypoints);
-                    detector->compute(input, keypoints, descriptor);
+                    detector.detect(input, keypoints);
+                    detector.compute(input, keypoints, descriptor);
                     featuresUnclustered.push_back(descriptor);
                 }
             }
@@ -91,10 +90,10 @@ int main(int argc, char* argv[])
     Ptr<DescriptorMatcher> matcher(new FlannBasedMatcher);
 
     //create Sift feature point extracter
-    Ptr<FeatureDetector> siftdetector = SiftFeatureDetector::create();
+    Ptr<FeatureDetector> siftdetector(new SiftFeatureDetector());
 
     //create Sift descriptor extractor
-    Ptr<DescriptorExtractor> extractor = SiftDescriptorExtractor::create();
+    Ptr<DescriptorExtractor> extractor(new SiftDescriptorExtractor);
 
     //create BoF (or BoW) descriptor extractor
     BOWImgDescriptorExtractor bowDE(extractor,matcher);
@@ -125,6 +124,8 @@ int main(int argc, char* argv[])
                 if(find(validFormats.begin(), validFormats.end(), format) != validFormats.end())
                 {
                     string rawname = fullname.substr(0, lastindex);
+                    string complete = rawname + "*" + format;
+                    // printf("Complete filename: %s\n", complete.c_str());
 
                     Mat img = imread(filename,CV_LOAD_IMAGE_GRAYSCALE);
 
@@ -134,13 +135,12 @@ int main(int argc, char* argv[])
                     Mat bowDescriptor;
                     bowDE.compute(img,keypoints,bowDescriptor);
 
-                    sprintf(imageTag,"%s", rawname.c_str());
-                    sprintf(filename2, "%s/siftdescriptors/%s.yml", argv[2], rawname.c_str());
+                    sprintf(filename2, "%s/siftdescriptors/%s.yml", argv[2], complete.c_str());
 
                     FileStorage fs1(filename2, FileStorage::WRITE);
                     printf("%s\n", filename2);
 
-                    fs1 << imageTag << bowDescriptor;
+                    fs1 << rawname.c_str() << bowDescriptor;
                     fs1.release();
                 }
             }
