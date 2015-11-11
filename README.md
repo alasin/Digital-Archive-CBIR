@@ -8,7 +8,7 @@ By no means is this a flawless platform structure and does require some work. Op
 
 **CODE STRUCTURE**
 
-- **Server** directory contains code for the upload interface which allows users to upload their images one-by-one with their corresponding tags (location, style, theme etc.). Can be started by using `node app` or `nodemon app`. It currently listens on `localhost:8080`. 
+- **Server** directory contains code for the upload interface which allows users to upload their images one-by-one with their corresponding tags (location, style, theme etc.). Can be started by using `node app` or `nodemon app`. It currently listens on `localhost:8080`.
 
 - **Client** directory contains code for the search interface which allows users to search on the basis of tags or perform an image-based search. Can be started by using `node app` or `nodemon app`. It currently listens on `localhost:8080`. You should also start the BaseX server from another terminal by typing `basexserver`.
 
@@ -18,7 +18,22 @@ By no means is this a flawless platform structure and does require some work. Op
 
 - **ColorExtraction** contains code for generating color histograms and color-based matching.
 
+**DEPENDENCIES**
+
+- **OpenCV 2.4.9 or greater** Note: OpenCV 3 is currently not supported.
+
+- **Imagemagick** Can be installed using `apt-get install libmagick++-dev` or something similar.
+
+- **Python 2.x**
+
+- **CMake**
+
+- **Build essentials(g++, make etc.)** Can be installed using `apt-get install build-essential` or something similar.
+
+- **NodeJS and npm**
+
+- **Python packages(xmltodict, numpy, argparse and glob)** Some are already installed with Python. Others can be installed using `pip install`.
+
+- **Node packages** Needed in the Server and Client apps. Listed in `package.json` files.  
+
 For a more detailed description of above directories, go through **README** for the specific directory. 
-
-
-
