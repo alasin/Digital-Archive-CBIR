@@ -26,6 +26,8 @@ By no means is this a flawless platform structure and does require some work. Op
 
 - **Python 2.x**
 
+- **BaseX XML Database**
+
 - **CMake**
 
 - **Build essentials(g++, make etc.)** Can be installed using `apt-get install build-essential` or something similar.
@@ -36,4 +38,4 @@ By no means is this a flawless platform structure and does require some work. Op
 
 - **Node packages** Needed in the Server and Client apps. Listed in `package.json` files.  
 
-For a more detailed description of above directories, go through **README** for the specific directory. 
+For a more detailed description of above directories, go through **README** for the specific directory.
