@@ -37,11 +37,11 @@ app.post('/upload', function(req, res) {
             // Write file to Database/fullsize and Database/thumbs folder
             fs.writeFile(newPath, data, function(err) {
 
-                var locationtag = req.body.locationtag;
-                var periodtag = req.body.periodtag;
-                var styletag = req.body.styletag;
-                var themetag = req.body.themetag;
-                var objecttag = req.body.objecttag;
+                var locationtag = req.body.locationtag.toLowerCase();
+                var periodtag = req.body.periodtag.toLowerCase();
+                var styletag = req.body.styletag.toLowerCase();
+                var themetag = req.body.themetag.toLowerCase();
+                var objecttag = req.body.objecttag.toLowerCase();
                 var count = 0;
 
                 fs.writeFileSync(thumbPath, im.convert({
